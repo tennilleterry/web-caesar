@@ -1,6 +1,5 @@
 from flask import Flask, request
 from caesar import rotate_string
-import cgi
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
@@ -11,14 +10,14 @@ form= """
 <html>
     <head>
         <style>
-            form {{
+            form {
                 background-color: #eee;
                 padding: 20px;
                 margin: 0 auto;
                 width: 540px;
                 font: 16px sans-serif;
                 border-radius: 10px;
-            }}
+            }
             textarea {{
                 margin: 10px 0;
                 width: 540px;
@@ -30,14 +29,15 @@ form= """
         
         <form action= "/encrypt" method="post">
             <div>
-                <label for="rot">Rotate by:</label>
-                <input name="rot" type="text" value=0 />
-                
+                <label>Rotate by:
+                   <input name="rot" type="text" value=0 />
+                   
+                </label>
             </div>
             
-            
-            <textarea type="text" name="text">{0}</textarea>
-            <br />
+            <p></p> 
+            <textarea type="text" name="text">{1}</textarea>
+            <p></p>
             <input type="submit" value="Submit Query" />
         </form>
 
@@ -49,9 +49,7 @@ form= """
 @app.route("/")
 def index():
     
-#    return form.format(encryption='')
-     return form.format("")
-#   return form
+    return form.format("")
 
 @app.route("/encrypt", methods=['POST'])
 def encrypt():
@@ -62,12 +60,7 @@ def encrypt():
     phrase = rotate_string(text, rot)
 
 
-    phrase = '<h1>'+ phrase +'</h1>'
-#    return form.format(encryption=phrase)
-#    return form.format(encryption=phrase)
+    phrase = '<h1>' + phrase + '</h1>'
     return form.format(phrase)
-    
-    
-    
 
 app.run()
